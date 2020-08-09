@@ -1,3 +1,18 @@
-PODFILE CHECKSUM: 4bfd991ec5ac2e141e0011d79227cc22daca1d81
+PODS:
+  - FastDI (1.0.0)
+  - FastDI/Tests (1.0.0)
+
+DEPENDENCIES:
+  - FastDI (from `DeveloperPods/FastDI/`)
+  - FastDI/Tests (from `DeveloperPods/FastDI/`)
+
+EXTERNAL SOURCES:
+  FastDI:
+    :path: DeveloperPods/FastDI/
+
+SPEC CHECKSUMS:
+  FastDI: 1dc042d47c0935f3d392507ab1deb4ec363faeb4
+
+PODFILE CHECKSUM: a179391cdc86b54893902a84cd024dc3835cd6bd
 
 COCOAPODS: 1.9.1

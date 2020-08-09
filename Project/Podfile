@@ -9,7 +9,15 @@ end
 target 'Weather' do
   use_frameworks!
 
+  addModule 'App'
+  addModule 'Core'
+  addModule 'Design'
   addModule 'FastDI'
+  addModule 'Utils'
+  addModule 'CitySearchUserStory'
+  addModule 'MainScreen'
+  addModule 'WeatherUserStory'
+
 
   target 'WeatherTests' do
   end

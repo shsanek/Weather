@@ -1,18 +1,107 @@
 PODS:
+  - App (1.0.0):
+    - CitySearchUserStory
+    - Core
+    - FastDI
+    - MainScreen
+    - Utils
+    - WeatherUserStory
+  - App/Tests (1.0.0):
+    - CitySearchUserStory
+    - Core
+    - FastDI
+    - MainScreen
+    - Utils
+    - WeatherUserStory
+  - CitySearchUserStory (1.0.0):
+    - Core
+    - Design
+    - FastDI
+    - Utils
+  - CitySearchUserStory/Tests (1.0.0):
+    - Core
+    - Design
+    - FastDI
+    - Utils
+  - Core (1.0.0):
+    - Utils
+  - Core/Tests (1.0.0):
+    - Utils
+  - Design (1.0.0):
+    - Utils
+  - Design/Tests (1.0.0):
+    - Utils
   - FastDI (1.0.0)
   - FastDI/Tests (1.0.0)
+  - MainScreen (1.0.0):
+    - Core
+    - Design
+    - FastDI
+    - Utils
+  - MainScreen/Tests (1.0.0):
+    - Core
+    - Design
+    - FastDI
+    - Utils
+  - Utils (1.0.0)
+  - Utils/Tests (1.0.0)
+  - WeatherUserStory (1.0.0):
+    - Core
+    - Design
+    - FastDI
+    - Utils
+  - WeatherUserStory/Tests (1.0.0):
+    - Core
+    - Design
+    - FastDI
+    - Utils
 
 DEPENDENCIES:
+  - App (from `DeveloperPods/App/`)
+  - App/Tests (from `DeveloperPods/App/`)
+  - CitySearchUserStory (from `DeveloperPods/CitySearchUserStory/`)
+  - CitySearchUserStory/Tests (from `DeveloperPods/CitySearchUserStory/`)
+  - Core (from `DeveloperPods/Core/`)
+  - Core/Tests (from `DeveloperPods/Core/`)
+  - Design (from `DeveloperPods/Design/`)
+  - Design/Tests (from `DeveloperPods/Design/`)
   - FastDI (from `DeveloperPods/FastDI/`)
   - FastDI/Tests (from `DeveloperPods/FastDI/`)
+  - MainScreen (from `DeveloperPods/MainScreen/`)
+  - MainScreen/Tests (from `DeveloperPods/MainScreen/`)
+  - Utils (from `DeveloperPods/Utils/`)
+  - Utils/Tests (from `DeveloperPods/Utils/`)
+  - WeatherUserStory (from `DeveloperPods/WeatherUserStory/`)
+  - WeatherUserStory/Tests (from `DeveloperPods/WeatherUserStory/`)
 
 EXTERNAL SOURCES:
+  App:
+    :path: DeveloperPods/App/
+  CitySearchUserStory:
+    :path: DeveloperPods/CitySearchUserStory/
+  Core:
+    :path: DeveloperPods/Core/
+  Design:
+    :path: DeveloperPods/Design/
   FastDI:
     :path: DeveloperPods/FastDI/
+  MainScreen:
+    :path: DeveloperPods/MainScreen/
+  Utils:
+    :path: DeveloperPods/Utils/
+  WeatherUserStory:
+    :path: DeveloperPods/WeatherUserStory/
 
 SPEC CHECKSUMS:
+  App: 9ea5591551b37fa2401d9c6764deb0b45c6c1db3
+  CitySearchUserStory: 91dbff24981b42783a7335fc1a539c4faf2dc82a
+  Core: d1617b716d90d317bc96006c52835dba214bd33f
+  Design: 0e2457689c135c9ac93b3af9927d75d14ee12250
   FastDI: 1dc042d47c0935f3d392507ab1deb4ec363faeb4
+  MainScreen: 7a056c60e76da8cd768d7c8a20c0382401f6c93d
+  Utils: 1b5a462e8cf1989e99109b467a42b57045a091e0
+  WeatherUserStory: 3a6fc4a277a35ca3419b407556b50dc2ec8a6351
 
-PODFILE CHECKSUM: a179391cdc86b54893902a84cd024dc3835cd6bd
+PODFILE CHECKSUM: 3931e115ef95cc88804bc7b1b4e22c4c21f63f63
 
 COCOAPODS: 1.9.1

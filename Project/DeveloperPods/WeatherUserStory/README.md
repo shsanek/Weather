@@ -1,0 +1,2 @@
+# WeatherUserStory
+Модуль показа погоды

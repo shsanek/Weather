@@ -7,7 +7,6 @@ pod name, :path => 'DeveloperPods/' + name + '/', :testspecs => ['Tests']
 end
 
 target 'Weather' do
-  use_frameworks!
 
   addModule 'App'
   addModule 'Core'

@@ -17,7 +17,6 @@ public final class DIContainer
 
     public func resolve<Type>(_ args: Any...) throws -> Type
     {
-        print("\(Type.self)")
         guard let container = self.containers.first(where: { $0.type == Type.self }) else
         {
             throw DIError.containerNotFount(type: Type.self)

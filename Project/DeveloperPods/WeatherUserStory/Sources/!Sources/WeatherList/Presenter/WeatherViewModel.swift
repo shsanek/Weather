@@ -13,5 +13,6 @@ internal struct WeatherViewModel
     internal let imageProvider: DataProvider<UIImage>
     internal let temperature: String
     internal let dayName: String
+    internal let action: () -> Void
 
 }

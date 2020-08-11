@@ -27,3 +27,24 @@ public final class ScreenBuilder<Presenter, UI: IScreenUI>
     }
 
 }
+
+public final class ScreenBuilderWithArgument<Presenter, UI: IScreenUI, Argument>
+{
+
+    public var presenterMaker: (UI, Argument) throws -> Presenter = { _, _ in throw BaseError.notImplementation }
+    public var uiMaker: () throws -> UI = { throw BaseError.notImplementation }
+
+    public init()
+    {
+    }
+
+    public func makeScreen(_ arg: Argument, hookHandler: (Presenter) -> Void = { _ in }) throws -> IScreen
+    {
+        let ui = try self.uiMaker()
+        let presenter = try self.presenterMaker(ui, arg)
+        hookHandler(presenter)
+        let vc = GenericViewController(presenter: presenter, ui: ui)
+        return Screen(viewController: vc)
+    }
+
+}

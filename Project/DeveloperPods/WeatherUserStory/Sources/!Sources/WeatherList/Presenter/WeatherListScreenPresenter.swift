@@ -17,6 +17,8 @@ internal final class WeatherListScreenPresenter
         }
     }
 
+    internal var openDetailsHandler: ((WeatherModel) -> Void)?
+
     private let ui: IWeatherListScreenUI
     private let weathersService: IWeathersService
     private let formatter = DateFormatter.weakDayNameFormatter
@@ -75,7 +77,9 @@ internal final class WeatherListScreenPresenter
         let dayName = self.formatter.string(from: model.day)
         return WeatherViewModel(imageProvider: self.imagesService.imageProvider(model.iconURL),
                                 temperature: "\(model.temperature)",
-                                dayName: dayName)
+                                dayName: dayName) { [weak self] in
+                                    self?.openDetailsHandler?(model)
+        }
     }
 
 }

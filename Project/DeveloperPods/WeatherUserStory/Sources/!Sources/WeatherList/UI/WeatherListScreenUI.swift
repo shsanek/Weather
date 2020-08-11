@@ -67,7 +67,7 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
         var imageProviderTasks = [UITableViewCell: Any]()
         for viewModel in weathers
         {
-            let item = TableDataController.Item(actionHandler: { }){ (cell: SubtitleCell) in
+            let item = TableDataController.Item(actionHandler: viewModel.action){ (cell: SubtitleCell) in
                 cell.textLabel?.text = viewModel.dayName
                 cell.detailTextLabel?.text = viewModel.temperature
                 imageProviderTasks[cell] = viewModel.imageProvider.fetch { image in

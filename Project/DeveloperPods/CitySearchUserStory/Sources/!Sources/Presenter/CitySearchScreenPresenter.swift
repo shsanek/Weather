@@ -65,6 +65,7 @@ internal final class CitySearchScreenPresenter
             self.ui.appendViewModels(data.cityList.map { city in
                 CityViewModel(name: city.name) { [weak self] in
                     self?.ui.resetSearch()
+                    self?.loadWithText("")
                     self?.didSelectCityHandler?(city)
                     self?.closeHandler?()
                 }

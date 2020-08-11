@@ -41,6 +41,15 @@ internal final class RootRouter
 
             let citySearchRouter = try self.citySearchRouterMaker()
             self.citySearchRouter = citySearchRouter
+            citySearchRouter.openHandler = { [mainScreen] in
+                mainScreen.open()
+            }
+            citySearchRouter.closeHandler = { [mainScreen] in
+                mainScreen.close()
+            }
+            citySearchRouter.didSelectCityHandler = { [weak weatherListRouter] city in
+                weatherListRouter?.didSelectCity(city)
+            }
             citySearchRouter.insertScreenHandler = {
                 mainScreen.setBottomContent(screen: $0)
             }

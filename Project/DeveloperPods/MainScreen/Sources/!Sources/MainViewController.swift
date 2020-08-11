@@ -17,7 +17,7 @@ public protocol IMainDelegate
 }
 
 
-public struct MainScreen: IScreen
+public final class MainScreen: IScreen
 {
 
     public var viewController: UIViewController {
@@ -38,6 +38,16 @@ public struct MainScreen: IScreen
     public func setBottomContent(screen: IScreen)
     {
         self.mainViewController.bottomContainerViewController = screen.viewController
+    }
+
+    public func open()
+    {
+        self.mainViewController.open()
+    }
+
+    public func close()
+    {
+        self.mainViewController.close()
     }
 }
 
@@ -83,6 +93,16 @@ internal final class MainViewController: UIViewController
         fatalError("init(coder:) has not been implemented")
     }
 
+    internal func open()
+    {
+        self.mainView.open()
+    }
+
+    internal func close()
+    {
+        self.mainView.close()
+    }
+
     private func removeSubcontroller(viewController: UIViewController)
     {
         viewController.willMove(toParent: nil)
@@ -94,7 +114,7 @@ internal final class MainViewController: UIViewController
     {
         self.addChild(viewController)
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
-        self.mainView.mainContainerView.addSubview(viewController.view)
+        view.addSubview(viewController.view)
         viewController.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         viewController.view.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -175,7 +195,7 @@ internal final class MainView: UIView
         self.bottomContainerView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         self.bottomContainerView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         self.bottomContainerView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        self.topConstraint = self.mainContainerView.bottomAnchor.constraint(equalTo: self.topAnchor)
+        self.topConstraint = self.bottomContainerView.topAnchor.constraint(equalTo: self.topAnchor)
         self.topConstraint?.isActive = false
         let constraint = self.bottomContainerView.heightAnchor.constraint(equalToConstant: self.config.minBottomBarHeight)
         constraint.priority = .defaultHigh

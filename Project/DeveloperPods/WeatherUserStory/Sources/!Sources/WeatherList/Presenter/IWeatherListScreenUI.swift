@@ -10,6 +10,7 @@ internal protocol IWeatherListScreenUI: AnyObject
 
     var updateHandler: (() -> Void)? { get set }
 
+    func showEmpty()
     func hideLoadingState()
     func showLoadingState()
     func showErrorState(text: String)

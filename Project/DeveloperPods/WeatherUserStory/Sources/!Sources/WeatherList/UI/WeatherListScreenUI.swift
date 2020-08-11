@@ -17,23 +17,28 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
     internal let tableController = TableDataController()
 
     private var weatherItems: [TableDataController.Item]?
-    private var errorItem: TableDataController.Item?
+    private var textItem: TableDataController.Item?
     private let refreshControl = UIRefreshControl()
 
     internal init()
     {
-        self.tableController.tableView.refreshControl = self.refreshControl
         self.refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
     }
 
     internal func showLoadingState()
     {
+        self.tableController.tableView.refreshControl = self.refreshControl
         refreshControl.beginRefreshing()
     }
 
     internal func showErrorState(text: String)
     {
-        self.tableController.removeItem(self.errorItem)
+        self.tableController.removeItem(self.textItem)
+        let item = TableDataController.Item { (cell: UITableViewCell) in
+            cell.textLabel?.text = text
+        }
+        self.textItem = item
+        self.tableController.items.insert(item, at: 0)
     }
 
     internal func hideLoadingState()
@@ -41,9 +46,22 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
         refreshControl.endRefreshing()
     }
 
+    internal func showEmpty()
+    {
+        self.tableController.tableView.refreshControl = nil
+        self.tableController.removeItem(self.textItem)
+        self.tableController.removeItems(self.weatherItems)
+        let item = TableDataController.Item { (cell: UITableViewCell) in
+            cell.textLabel?.text = "Выберите город"
+        }
+        self.textItem = item
+        self.tableController.items.insert(item, at: 0)
+    }
+
     internal func showWeathers(_ weathers: [WeatherViewModel])
     {
-        self.tableController.removeItem(self.errorItem)
+        self.tableController.tableView.refreshControl = self.refreshControl
+        self.tableController.removeItem(self.textItem)
         self.tableController.removeItems(self.weatherItems)
         var items = [TableDataController.Item]()
         var imageProviderTasks = [UITableViewCell: Any]()

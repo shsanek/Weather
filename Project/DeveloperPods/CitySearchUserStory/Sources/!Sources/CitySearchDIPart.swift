@@ -14,8 +14,10 @@ public struct CitySearchDIPart
     public static func load(_ container: DIContainer)
     {
         container.register {
-            CitySearchScreenPresenter(ui: di_arg($0))
+            CitySearchScreenPresenter(ui: di_arg($0),
+                                      citySearchService: $1)
         }
+        container.register(CitySearchServiceConfig.init)
         container.register(CitySearchScreenUI.init)
         container.register(CitySearchService.init)
             .as(ICitySearchService.self)

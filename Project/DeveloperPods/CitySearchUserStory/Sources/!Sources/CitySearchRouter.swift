@@ -10,6 +10,9 @@ import Core
 public final class CitySearchRouter
 {
 
+    public var didSelectCityHandler: ((_ city: City) -> Void)?
+    public var openHandler: (() -> Void)?
+    public var closeHandler: (() -> Void)?
     public var insertScreenHandler: ((IScreen) -> Void)?
 
     private let screenBuilder: ScreenBuilder<CitySearchScreenPresenter, CitySearchScreenUI>
@@ -23,12 +26,27 @@ public final class CitySearchRouter
     {
         do
         {
-            let screen = try self.screenBuilder.makeScreen()
+            let screen = try self.screenBuilder.makeScreen { (presenter) in
+                self.setHooks(presenter)
+            }
             self.insertScreenHandler?(screen)
         }
         catch
         {
             fatalError("\(error)")
+        }
+    }
+
+    private func setHooks(_ presenter: CitySearchScreenPresenter)
+    {
+        presenter.closeHandler = { [weak self] in
+            self?.closeHandler?()
+        }
+        presenter.didSelectCityHandler = { [weak self] city in
+            self?.didSelectCityHandler?(city)
+        }
+        presenter.openHandler = { [weak self] in
+            self?.openHandler?()
         }
     }
 

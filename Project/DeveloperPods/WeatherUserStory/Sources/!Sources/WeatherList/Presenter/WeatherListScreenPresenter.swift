@@ -11,6 +11,12 @@ import Utils
 internal final class WeatherListScreenPresenter
 {
 
+    internal var city: City? {
+        didSet {
+            self.load()
+        }
+    }
+
     private let ui: IWeatherListScreenUI
     private let weathersService: IWeathersService
     private let formatter = DateFormatter.weakDayNameFormatter
@@ -31,8 +37,13 @@ internal final class WeatherListScreenPresenter
 
     private func load()
     {
+        guard let city = self.city else
+        {
+            self.ui.showEmpty()
+            return
+        }
         self.ui.showLoadingState()
-        self.weathersService.fetchWeathers(with: City(latitude: "12", longitude: "15")) { [weak self] (result) in
+        self.weathersService.fetchWeathers(with: city) { [weak self] (result) in
             self?.didLoad(result)
             self?.ui.hideLoadingState()
         }

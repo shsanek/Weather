@@ -27,8 +27,8 @@ internal final class WeathersService: IWeathersService
             [WeathersOnecallMethodKey.appId: self.configure.apiID,
              WeathersOnecallMethodKey.exclude: WeathersOnecallMethodKey.excludeDaysOnlyValue,
              WeathersOnecallMethodKey.units: WeathersOnecallMethodKey.unitsMetricValue,
-             WeathersOnecallMethodKey.lat: city.latitude,
-             WeathersOnecallMethodKey.lon: city.longitude]
+             WeathersOnecallMethodKey.lat: "\(city.latitude)",
+             WeathersOnecallMethodKey.lon: "\(city.longitude)"]
         do
         {
             let request = try NetworkRequestCreater.makeRequest(endPoint: self.configure.endPoint,

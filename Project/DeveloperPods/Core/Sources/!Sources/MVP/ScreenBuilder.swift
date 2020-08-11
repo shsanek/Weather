@@ -17,10 +17,11 @@ public final class ScreenBuilder<Presenter, UI: IScreenUI>
     {
     }
 
-    public func makeScreen() throws -> IScreen
+    public func makeScreen(hookHandler: (Presenter) -> Void = { _ in }) throws -> IScreen
     {
         let ui = try self.uiMaker()
         let presenter = try self.presenterMaker(ui)
+        hookHandler(presenter)
         let vc = GenericViewController(presenter: presenter, ui: ui)
         return Screen(viewController: vc)
     }

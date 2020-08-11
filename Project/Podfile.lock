@@ -93,14 +93,14 @@ EXTERNAL SOURCES:
     :path: DeveloperPods/WeatherUserStory/
 
 SPEC CHECKSUMS:
-  App: 796f35f0d21e4f652fa2af19ded61185634e02d2
-  CitySearchUserStory: 91dbff24981b42783a7335fc1a539c4faf2dc82a
-  Core: d1617b716d90d317bc96006c52835dba214bd33f
-  Design: 0e2457689c135c9ac93b3af9927d75d14ee12250
-  FastDI: 1dc042d47c0935f3d392507ab1deb4ec363faeb4
-  MainScreen: 7a056c60e76da8cd768d7c8a20c0382401f6c93d
-  Utils: 1b5a462e8cf1989e99109b467a42b57045a091e0
-  WeatherUserStory: 73795b450c3624331cb6bcefa96eeead296e8d41
+  App: a8a65cddae34e4dd4814f1605a649304205d0cf5
+  CitySearchUserStory: f96740e464e08d1d743f23eebbbd631060227213
+  Core: 41f22f609989b55c223c75bcb1bd934ec1e6c04d
+  Design: 0b00400fde8b455c5f36e5de2de4305c4c8d2f16
+  FastDI: 738d1781e2c3ca9a4489768fad3c4b93d1b05150
+  MainScreen: 371bd56729adebbec591efdb3f4d7acfee85fc1f
+  Utils: d6b1a1aa73c9150eb52dbcdd6841bb1ec89c8940
+  WeatherUserStory: d0426064fa03874c1a301d6274ff37bd6a1c0148
 
 PODFILE CHECKSUM: 03343a1c2e9e4a496b6ad713928d9fe5d0221370
 

@@ -3,7 +3,7 @@ Pod::Spec.new do |spec|
   spec.name         = 'Utils'
   spec.source_files           = 'Sources/**/*.swift'
 
-  spec.ios.deployment_target = '9.0'
+  spec.ios.deployment_target = '12.0'
 
   spec.version = '1.0.0'
   spec.authors = 'Alexandr Shipin'

@@ -10,12 +10,15 @@ import Foundation
 public struct City
 {
 
-    public let latitude: String
-    public let longitude: String
+    public let name: String
+    public let latitude: Double
+    public let longitude: Double
 
-    public init(latitude: String,
-                longitude: String)
+    public init(name: String,
+                latitude: Double,
+                longitude: Double)
     {
+        self.name = name
         self.latitude = latitude
         self.longitude = longitude
     }

@@ -8,6 +8,7 @@
 import FastDI
 import CitySearchUserStory
 import WeatherUserStory
+import Utils
 
 internal struct AppDIPart
 {
@@ -21,6 +22,17 @@ internal struct AppDIPart
         }
         .injection(\.citySearchRouterMaker)
         .injection(\.weatherListRouterMaker)
+
+        let session = URLSession(configuration: .default)
+        container.register {
+            session
+        }
+        container.register(NetworkService.init)
+            .as(INetworkService.self)
+
+        let imagesService = ImagesService(session: session)
+        container.register { imagesService }
+            .as(IImagesService.self)
     }
 
 }

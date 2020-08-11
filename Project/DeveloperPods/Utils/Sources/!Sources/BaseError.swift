@@ -9,5 +9,6 @@ public enum BaseError: Error
 {
 
     case notImplementation
+    case messageError(message: String)
 
 }

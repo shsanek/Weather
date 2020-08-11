@@ -14,9 +14,12 @@ public struct WeathersDIPart
     public static func load(_ container: DIContainer)
     {
         container.register {
-            WeatherListScreenPresenter(ui: di_arg($0))
+            WeatherListScreenPresenter(ui: di_arg($0),
+                                       weathersService: $1,
+                                       imagesService: $2)
         }
         container.register(WeatherListScreenUI.init)
+        container.register(WeathersServiceConfigure.init)
         container.register(WeathersService.init)
             .as(IWeathersService.self)
         container.register(WeatherListRouter.init)

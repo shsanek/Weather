@@ -76,21 +76,21 @@ extension DIContainer
     }
 
     @discardableResult
-    public func register<Type, ARG1, ARG2>(_ maker: @escaping (ARG1, ARG2) -> Type) -> RegistrationControll<Type>
+    public func register<Type, ARG1, ARG2>(_ maker: @escaping ((ARG1, ARG2)) -> Type) -> RegistrationControll<Type>
     {
         self.register { di, argumentsPool in
-            return maker(try di.fetchValue(argumentsPool: argumentsPool),
-                         try di.fetchValue(argumentsPool: argumentsPool))
+            return maker((try di.fetchValue(argumentsPool: argumentsPool),
+                         try di.fetchValue(argumentsPool: argumentsPool)))
         }
     }
 
     @discardableResult
-    public func register<Type, ARG1, ARG2, ARG3>(_ maker: @escaping (ARG1, ARG2, ARG3) -> Type) -> RegistrationControll<Type>
+    public func register<Type, ARG1, ARG2, ARG3>(_ maker: @escaping ((ARG1, ARG2, ARG3)) -> Type) -> RegistrationControll<Type>
     {
         self.register { di, argumentsPool in
-            return maker(try di.fetchValue(argumentsPool: argumentsPool),
+            return maker((try di.fetchValue(argumentsPool: argumentsPool),
                          try di.fetchValue(argumentsPool: argumentsPool),
-                         try di.fetchValue(argumentsPool: argumentsPool))
+                         try di.fetchValue(argumentsPool: argumentsPool)))
         }
     }
 

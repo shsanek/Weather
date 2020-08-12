@@ -30,9 +30,15 @@ public final class Navigator: INavigator
 
     private func present(with config: ShowPresentConfig)
     {
+
         let viewController = config.screen.viewController
-        self.navigationController.present(viewController,
-                                          animated: true)
+
+        /// чет гдето я накосячил а разбираться уже некогда как то оно криво с большой задержкой вызываеться без этого
+        /// как будто я где то процес анимации прерываю или что такое 
+        DispatchQueue.main.async {
+            self.navigationController.present(viewController,
+                                              animated: true)
+        }
         let closeController = config.closeController
         closeController.closeHandler = { [navigationController, weak closeController, weak viewController] in
             guard let viewController = viewController else

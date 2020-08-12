@@ -55,11 +55,12 @@ extension TableDataController.Item
     }
 
     public convenience init<FillerType: IViewFiller>(actionHandler: (() -> Void)? = nil,
-                                                     fillerBuilder: @escaping () -> FillerType)
+                                                     fillerBuilder: () -> FillerType)
     {
+        let filler = fillerBuilder()
         self.init(identifier: nil,
                   actionHandler: actionHandler) { (cell: ContainerTableViewCell<FillerType.ObjectType>) in
-                    fillerBuilder().fill(cell.myContentView)
+                    filler.fill(cell.myContentView)
         }
     }
 

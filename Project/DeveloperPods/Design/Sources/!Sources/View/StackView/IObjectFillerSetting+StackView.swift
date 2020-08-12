@@ -10,10 +10,11 @@ public typealias Stack<Content> = ViewFiller<StackView<Content>>
 extension IObjectFillerSetting where ObjectType: IStackView, Self: IObjectFillerInitable
 {
 
-    public init(@StackBuilder contentBuilder: @escaping () -> StackViewContent<ObjectType.Content>)
+    public init(@StackBuilder contentBuilder: () -> StackViewContent<ObjectType.Content>)
     {
+        let content = contentBuilder()
         self = Self().addFillHandler({ (stackView) in
-            contentBuilder().setContent(stackView)
+            content.setContent(stackView)
         })
     }
 

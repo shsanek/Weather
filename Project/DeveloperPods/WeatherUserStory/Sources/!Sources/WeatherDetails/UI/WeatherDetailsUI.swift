@@ -13,10 +13,16 @@ internal final class WeatherDetailsUI: IWeatherDetailsUI, IScreenUI
 
 
     internal lazy var rootView: UIView = stackContainerView
-    internal lazy var stackContainerView = Container {
+    private lazy var stackContainerView = Container {
         ViewFiller<UIStackView>()
             .offset()
     }.backgroundColor(.white).makeView()
+    private let skin: Skin
+
+    internal init(skin: Skin)
+    {
+        self.skin = skin
+    }
 
     internal func rebuild(_ viewModel: WeatherDetailsViewModel)
     {
@@ -27,20 +33,26 @@ internal final class WeatherDetailsUI: IWeatherDetailsUI, IScreenUI
     private func createView(_ viewModel: WeatherDetailsViewModel) -> UIView
     {
         return Stack {
+            View()
+                .height(skin.layout.verticalBigMargin)
             Label(viewModel.dayName)
                 .textAlignment(.center)
+                .textColor(skin.palette.text.main)
+                .font(skin.font.bitTitle)
             Container {
                 Image(viewModel.imageProvider)
-                    .size(width: 24, height: 24)
+                    .size(width: 64, height: 64)
                     .verticalOfsset()
                     .centerX()
             }
             Label(viewModel.temperature)
                 .textAlignment(.center)
+                .textColor(skin.palette.text.main)
+                .font(skin.font.title)
             View()
         }
-            .setAxis(.vertical)
-            .makeView()
+        .setAxis(.vertical)
+        .makeView()
     }
 
 }

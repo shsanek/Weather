@@ -29,6 +29,7 @@ public final class TableDataController: NSObject, UITableViewDataSource, UITable
         self.tableView.estimatedRowHeight = 44.0
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.backgroundColor = .clear
     }
 
     internal func update()

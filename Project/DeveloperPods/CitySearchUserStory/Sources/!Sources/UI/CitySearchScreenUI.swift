@@ -19,21 +19,25 @@ internal final class CitySearchScreenUI: IScreenUI, ICitySearchScreenUI
     private let tableController = TableDataController()
     private var lastItem: TableDataController.Item?
 
-    private var stackContainerView = Container {
+    private lazy var stackContainerView = Container {
         ViewFiller<UIStackView>()
             .offset()
             .setAxis(.vertical)
             .setDistribution(.fill)
             .setAlignment(.fill)
             .setSpacing(10.0)
-    }.backgroundColor(.lightGray).makeView()
+    }.backgroundColor(self.skin.palette.background.support).makeView()
 
     private lazy var textInputContainer = Container {
         TextField()
             .placeholder("Введите название города")
-            .offset(top: 8.0, bottom: 8.0,
-                    left: 16.0, right: 16.0)
+            .offset(top: 8.0,
+                    bottom: 8.0,
+                    left: self.skin.layout.horizontalMargin,
+                    right: self.skin.layout.horizontalMargin)
             .height(44.0)
+            .font(self.skin.font.main)
+            .textColor(self.skin.palette.text.main)
             .updateTextHandler { [weak self] (text) in
                 self?.updateSearchStringHandler?(text ?? "")
             }.textFieldShouldBeginEditingHandler { [weak self] () -> Bool in
@@ -42,8 +46,11 @@ internal final class CitySearchScreenUI: IScreenUI, ICitySearchScreenUI
         }
     }.makeView()
 
-    internal init()
+    private let skin: Skin
+
+    internal init(skin: Skin)
     {
+        self.skin = skin
         self.configure()
     }
 
@@ -52,8 +59,10 @@ internal final class CitySearchScreenUI: IScreenUI, ICitySearchScreenUI
         var items = [TableDataController.Item]()
         for viewModel in viewModels
         {
-            let item = TableDataController.Item(actionHandler: viewModel.action) { (cell: UITableViewCell) in
+            let item = TableDataController.Item(actionHandler: viewModel.action) { [skin] (cell: UITableViewCell) in
                 cell.textLabel?.text = viewModel.name
+                cell.textLabel?.textColor = skin.palette.text.main
+                cell.textLabel?.font = skin.font.main
             }
             items.append(item)
         }

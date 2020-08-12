@@ -9,6 +9,8 @@ import FastDI
 import CitySearchUserStory
 import WeatherUserStory
 import Utils
+import Design
+import MainScreen
 
 internal struct AppDIPart
 {
@@ -22,7 +24,10 @@ internal struct AppDIPart
         }
         .injection(\.citySearchRouterMaker)
         .injection(\.weatherListRouterMaker)
+        .injection(\.mainScreenMaker)
 
+        container.register(MainScreen.init)
+        container.register(Skin.init)
         let session = URLSession(configuration: .default)
         container.register {
             session

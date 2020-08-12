@@ -15,6 +15,7 @@ import MainScreen
 internal final class RootRouter
 {
 
+    internal var mainScreenMaker: () throws -> MainScreen = { throw BaseError.notImplementation }
     internal var weatherListRouterMaker: (INavigator) throws -> WeatherListRouter = { _ in throw BaseError.notImplementation }
     internal var citySearchRouterMaker: () throws -> CitySearchRouter = { throw BaseError.notImplementation }
 
@@ -30,9 +31,9 @@ internal final class RootRouter
 
     internal func active()
     {
-        let mainScreen = MainScreen()
         do
         {
+            let mainScreen = try mainScreenMaker()
             let weatherListRouter = try self.weatherListRouterMaker(self.navigator)
             self.weatherListRouter = weatherListRouter
             weatherListRouter.insertScreenHandler = {
@@ -57,12 +58,12 @@ internal final class RootRouter
 
             weatherListRouter.active()
             citySearchRouter.active()
+            self.navigator.show(config: .push(config: ShowPushConfig(screen: mainScreen)))
         }
         catch
         {
             fatalError("\(error)")
         }
-        self.navigator.show(config: .push(config: ShowPushConfig(screen: mainScreen)))
     }
 
 

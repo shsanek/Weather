@@ -31,7 +31,7 @@ public struct WeathersDIPart
             .injection(\.presenterMaker)
             .injection(\.uiMaker)
         container.register {
-            WeatherDetailsPresenter(ui: di_arg($0), config: di_arg($1))
+            WeatherDetailsPresenter(ui: di_arg($0), config: di_arg($1), imagesService: $2)
         }
         container.register(WeatherDetailsUI.init)
         container.register(ScreenBuilderWithArgument<WeatherDetailsPresenter, WeatherDetailsUI, WeatherDetailsPresenterConfig>.init)

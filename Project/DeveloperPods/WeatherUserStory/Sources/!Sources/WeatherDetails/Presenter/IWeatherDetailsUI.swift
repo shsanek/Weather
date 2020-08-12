@@ -8,6 +8,6 @@
 internal protocol IWeatherDetailsUI
 {
 
-    func build(_ viewModel: WeatherDetailsViewModel)
+    func rebuild(_ viewModel: WeatherDetailsViewModel)
 
 }

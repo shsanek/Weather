@@ -12,16 +12,35 @@ internal final class WeatherDetailsUI: IWeatherDetailsUI, IScreenUI
 {
 
 
-    internal var rootView: UIView = UIView()
+    internal lazy var rootView: UIView = stackContainerView
+    internal lazy var stackContainerView = Container {
+        ViewFiller<UIStackView>()
+            .offset()
+    }.backgroundColor(.white).makeView()
 
-    internal init()
+    internal func rebuild(_ viewModel: WeatherDetailsViewModel)
     {
-        self.rootView.backgroundColor = .yellow
+        self.stackContainerView.contentView.subviews.forEach({ $0.removeFromSuperview() })
+        self.stackContainerView.contentView.addArrangedSubview(self.createView(viewModel))
     }
 
-    internal func build(_ viewModel: WeatherDetailsViewModel)
+    private func createView(_ viewModel: WeatherDetailsViewModel) -> UIView
     {
-
+        return Stack {
+            Label(viewModel.dayName)
+                .textAlignment(.center)
+            Container {
+                Image(viewModel.imageProvider)
+                    .size(width: 24, height: 24)
+                    .verticalOfsset()
+                    .centerX()
+            }
+            Label(viewModel.temperature)
+                .textAlignment(.center)
+            View()
+        }
+            .setAxis(.vertical)
+            .makeView()
     }
 
 }

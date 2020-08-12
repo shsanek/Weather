@@ -28,7 +28,7 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
     internal func showLoadingState()
     {
         self.tableController.tableView.refreshControl = self.refreshControl
-        refreshControl.beginRefreshing()
+        self.refreshControl.beginRefreshing()
     }
 
     internal func showErrorState(text: String)
@@ -48,7 +48,6 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
 
     internal func showEmpty()
     {
-        self.tableController.tableView.refreshControl = nil
         self.tableController.removeItem(self.textItem)
         self.tableController.removeItems(self.weatherItems)
         let item = self.emptyTableItem()

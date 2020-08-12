@@ -14,6 +14,6 @@ internal protocol IWeatherListScreenUI: AnyObject
     func hideLoadingState()
     func showLoadingState()
     func showErrorState(text: String)
-    func showWeathers(_ weathers: [WeatherViewModel])
+    func showViewModels(_ viewModels: [WeatherViewModel])
 
 }

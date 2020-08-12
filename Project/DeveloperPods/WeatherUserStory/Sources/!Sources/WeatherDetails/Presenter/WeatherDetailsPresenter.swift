@@ -5,13 +5,6 @@
 //  Created by Alex Shipin on 11.08.2020.
 //
 
-internal struct WeatherDetailsPresenterConfig
-{
-
-    internal let wather: WeatherModel
-
-}
-
 internal final class WeatherDetailsPresenter
 {
 
@@ -24,4 +17,5 @@ internal final class WeatherDetailsPresenter
         self.ui = ui
         self.config = config
     }
+
 }

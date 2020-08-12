@@ -8,7 +8,7 @@
 import CoreData
 import Utils
 
-internal class CityRawModel: StorageObject, DataObject
+internal class CityRawModel: StorageObject, IDataObject
 {
 
     internal static var identifier: String {

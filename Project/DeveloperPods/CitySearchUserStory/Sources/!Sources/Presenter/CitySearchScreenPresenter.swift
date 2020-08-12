@@ -67,7 +67,6 @@ internal final class CitySearchScreenPresenter
                     self?.ui.resetSearch()
                     self?.loadWithText("")
                     self?.didSelectCityHandler?(city)
-                    self?.closeHandler?()
                 }
             }, nextPadgeRequest: nextPadgeHandler)
         }

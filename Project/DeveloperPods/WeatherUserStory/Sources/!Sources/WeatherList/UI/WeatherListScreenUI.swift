@@ -58,14 +58,14 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
         self.tableController.items.insert(item, at: 0)
     }
 
-    internal func showWeathers(_ weathers: [WeatherViewModel])
+    internal func showViewModels(_ viewModels: [WeatherViewModel])
     {
         self.tableController.tableView.refreshControl = self.refreshControl
         self.tableController.removeItem(self.textItem)
         self.tableController.removeItems(self.weatherItems)
         var items = [TableDataController.Item]()
         var imageProviderTasks = [UITableViewCell: Any]()
-        for viewModel in weathers
+        for viewModel in viewModels
         {
             let item = TableDataController.Item(actionHandler: viewModel.action){ (cell: SubtitleCell) in
                 cell.textLabel?.text = viewModel.dayName

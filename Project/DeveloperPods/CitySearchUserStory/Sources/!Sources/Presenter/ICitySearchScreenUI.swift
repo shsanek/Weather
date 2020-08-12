@@ -14,14 +14,5 @@ internal protocol ICitySearchScreenUI: AnyObject
     func appendViewModels(_ viewModels: [CityViewModel], nextPadgeRequest: (() -> Void)?)
     func clear()
     func resetSearch()
-    func active()
-
-}
-
-internal struct CityViewModel
-{
-
-    internal let name: String
-    internal let action: () -> Void
 
 }

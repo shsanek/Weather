@@ -11,11 +11,11 @@ import Utils
 internal final class CitySearchService: ICitySearchService
 {
 
-    internal let dataStorage: DataStore
+    internal let dataStorage: IDataStorage
 
     internal init(config: CitySearchServiceConfig)
     {
-        self.dataStorage = DataStore(modelURL: config.modelURL, dataURL: config.dataURL)
+        self.dataStorage = CoreDataStorage(modelURL: config.modelURL, dataURL: config.dataURL)
     }
 
     internal func fetch(with request: CityRequest,
@@ -68,8 +68,16 @@ internal struct CitySearchServiceConfig
 
     internal init()
     {
-        self.modelURL = Bundle.main.url(forResource: "CityList", withExtension: "mom")!
-        self.dataURL = Bundle.main.url(forResource: "CityListData", withExtension: "sqllite")!
+        guard let modelURL = Bundle.main.url(forResource: "CityList", withExtension: "mom") else
+        {
+            fatalError("file CityList.mom not found")
+        }
+        guard let dataURL = Bundle.main.url(forResource: "CityListData", withExtension: "sqllite") else
+        {
+            fatalError("file CityListData.sqllite not found")
+        }
+        self.modelURL = modelURL
+        self.dataURL = dataURL
     }
     
 }

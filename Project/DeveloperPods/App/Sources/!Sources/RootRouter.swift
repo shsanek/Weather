@@ -49,6 +49,7 @@ internal final class RootRouter
             }
             citySearchRouter.didSelectCityHandler = { [weak weatherListRouter] city in
                 weatherListRouter?.didSelectCity(city)
+                mainScreen.close()
             }
             citySearchRouter.insertScreenHandler = {
                 mainScreen.setBottomContent(screen: $0)

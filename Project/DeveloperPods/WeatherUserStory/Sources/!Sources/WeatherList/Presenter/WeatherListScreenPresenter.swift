@@ -69,7 +69,7 @@ internal final class WeatherListScreenPresenter
 
     private func showWeathers(_ weathers: [WeatherModel])
     {
-        self.ui.showWeathers(weathers.map(self.createViewModel))
+        self.ui.showViewModels(weathers.map(self.createViewModel))
     }
 
     private func createViewModel(_ model: WeatherModel) -> WeatherViewModel

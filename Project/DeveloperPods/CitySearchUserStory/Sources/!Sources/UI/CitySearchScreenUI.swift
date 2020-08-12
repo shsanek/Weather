@@ -14,13 +14,33 @@ internal final class CitySearchScreenUI: IScreenUI, ICitySearchScreenUI
     internal var openHandler: (() -> Void)?
     internal var updateSearchStringHandler: ((String) -> Void)?
 
-    internal lazy var rootView: UIView = self.stackView
+    internal lazy var rootView: UIView = self.stackContainerView
 
     private let tableController = TableDataController()
     private var lastItem: TableDataController.Item?
-    private var stackView = UIStackView()
-    private let textField = UITextField()
-    private lazy var textFieldController = TextFieldController(textField: self.textField)
+
+    private var stackContainerView = Container {
+        ViewFiller<UIStackView>()
+            .offset()
+            .setAxis(.vertical)
+            .setDistribution(.fill)
+            .setAlignment(.fill)
+            .setSpacing(10.0)
+    }.backgroundColor(.lightGray).makeView()
+
+    private lazy var textInputContainer = Container {
+        TextField()
+            .placeholder("Введите название города")
+            .offset(top: 8.0, bottom: 8.0,
+                    left: 16.0, right: 16.0)
+            .height(44.0)
+            .updateTextHandler { [weak self] (text) in
+                self?.updateSearchStringHandler?(text ?? "")
+            }.textFieldShouldBeginEditingHandler { [weak self] () -> Bool in
+            self?.openHandler?()
+            return true
+        }
+    }.makeView()
 
     internal init()
     {
@@ -51,7 +71,7 @@ internal final class CitySearchScreenUI: IScreenUI, ICitySearchScreenUI
 
     internal func active()
     {
-        self.textField.resignFirstResponder()
+        self.textInputContainer.resignFirstResponder()
         self.openHandler?()
     }
 
@@ -62,29 +82,14 @@ internal final class CitySearchScreenUI: IScreenUI, ICitySearchScreenUI
 
     internal func resetSearch()
     {
-        self.textField.text = ""
-        self.textField.resignFirstResponder()
+        self.textInputContainer.contentView.text = ""
+        self.textInputContainer.contentView.resignFirstResponder()
     }
 
     private func configure()
     {
-        self.stackView.axis = .vertical
-        self.stackView.alignment = .fill
-        self.stackView.distribution = .fill
-        self.stackView.spacing = 10.0
-        self.textField.backgroundColor = .white
-        self.textField.placeholder = "Введите название города"
-
-        self.stackView.addArrangedSubview(self.textField)
-        self.stackView.addArrangedSubview(self.tableController.tableView)
-
-        self.textFieldController.textFieldShouldBeginEditingHandler = { [weak self] in
-            self?.openHandler?()
-            return true
-        }
-        self.textFieldController.updateText = { [weak self] text in
-            self?.updateSearchStringHandler?(text ?? "")
-        }
+        self.stackContainerView.contentView.addArrangedSubview(self.textInputContainer)
+        self.stackContainerView.contentView.addArrangedSubview(self.tableController.tableView)
     }
 
 }

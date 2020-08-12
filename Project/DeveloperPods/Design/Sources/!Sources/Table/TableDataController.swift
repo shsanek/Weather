@@ -84,6 +84,7 @@ public final class TableDataController: NSObject, UITableViewDataSource, UITable
 extension TableDataController
 {
 
+    @discardableResult
     public func insertItem<ViewType: UIView>(at index: Int,
                                              actionHandler: (() -> Void)? = nil,
                                              fillerHandler: @escaping (ViewType) -> Void) -> Item
@@ -93,10 +94,39 @@ extension TableDataController
         return item
     }
 
+    @discardableResult
     public func addItem<ViewType: UIView>(actionHandler: (() -> Void)? = nil,
                                           fillerHandler: @escaping (ViewType) -> Void) -> Item
     {
         let item = Item(actionHandler: actionHandler, fillerHandler: fillerHandler)
+        self.items.append(item)
+        return item
+    }
+
+}
+
+extension TableDataController
+{
+
+    @discardableResult
+    public func insertItem<FillerType: IViewFiller>(at index: Int,
+                                                    actionHandler: (() -> Void)? = nil,
+                                                    fillerBuilder: @escaping () -> FillerType) -> Item
+    {
+        let item = Item(actionHandler: actionHandler) {
+            fillerBuilder().fill($0)
+        }
+        self.items.insert(item, at: index)
+        return item
+    }
+
+    @discardableResult
+    public func addItem<FillerType: IViewFiller>(actionHandler: (() -> Void)? = nil,
+                                                 fillerBuilder: @escaping () -> FillerType) -> Item
+    {
+        let item = Item(actionHandler: actionHandler) {
+            fillerBuilder().fill($0)
+        }
         self.items.append(item)
         return item
     }

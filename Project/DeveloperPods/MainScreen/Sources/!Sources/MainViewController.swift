@@ -115,7 +115,7 @@ internal final class MainViewController: UIViewController
         self.addChild(viewController)
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(viewController.view)
-        viewController.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        viewController.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         viewController.view.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         viewController.view.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
@@ -155,15 +155,19 @@ internal final class MainView: UIView
 
     public func open()
     {
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 1) {
             self.topConstraint?.isActive = true
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
         }
     }
 
     public func close()
     {
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 1) {
             self.topConstraint?.isActive = false
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
         }
     }
 

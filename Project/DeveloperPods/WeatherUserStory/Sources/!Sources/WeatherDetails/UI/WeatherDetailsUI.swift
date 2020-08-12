@@ -11,11 +11,17 @@ import Design
 internal final class WeatherDetailsUI: IWeatherDetailsUI, IScreenUI
 {
 
+
     internal var rootView: UIView = UIView()
 
     internal init()
     {
         self.rootView.backgroundColor = .yellow
+    }
+
+    internal func build(_ viewModel: WeatherDetailsViewModel)
+    {
+
     }
 
 }

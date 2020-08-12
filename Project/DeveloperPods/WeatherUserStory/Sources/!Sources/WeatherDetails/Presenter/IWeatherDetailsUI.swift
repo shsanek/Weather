@@ -7,4 +7,7 @@
 
 internal protocol IWeatherDetailsUI
 {
+
+    func build(_ viewModel: WeatherDetailsViewModel)
+
 }

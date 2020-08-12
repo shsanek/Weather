@@ -15,7 +15,7 @@ public final class DataProvider<DataType>
         self.requestHandler = requestHandler
     }
 
-    public func fetch(completion: @escaping (DataType?) -> Void) -> DataProviderTask<DataType>
+    public func fetch(completion: @escaping (DataType?) -> Void) -> DataProviderTask
     {
         return DataProviderTask(requestHandler: self.requestHandler, completion: completion)
     }
@@ -25,7 +25,7 @@ public final class DataProvider<DataType>
 extension DataProvider
 {
 
-    public final class DataProviderTask<DataType>
+    public final class DataProviderTask
     {
 
         fileprivate init(requestHandler: @escaping (_ completion: @escaping (DataType?) -> Void) -> Void,

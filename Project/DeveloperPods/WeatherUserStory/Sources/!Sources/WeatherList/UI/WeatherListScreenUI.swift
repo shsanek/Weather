@@ -51,9 +51,7 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
         self.tableController.tableView.refreshControl = nil
         self.tableController.removeItem(self.textItem)
         self.tableController.removeItems(self.weatherItems)
-        let item = TableDataController.Item { (cell: UITableViewCell) in
-            cell.textLabel?.text = "Выберите город"
-        }
+        let item = self.emptyTableItem()
         self.textItem = item
         self.tableController.items.insert(item, at: 0)
     }
@@ -63,21 +61,47 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
         self.tableController.tableView.refreshControl = self.refreshControl
         self.tableController.removeItem(self.textItem)
         self.tableController.removeItems(self.weatherItems)
-        var items = [TableDataController.Item]()
-        var imageProviderTasks = [UITableViewCell: Any]()
-        for viewModel in viewModels
-        {
-            let item = TableDataController.Item(actionHandler: viewModel.action){ (cell: SubtitleCell) in
-                cell.textLabel?.text = viewModel.dayName
-                cell.detailTextLabel?.text = viewModel.temperature
-                imageProviderTasks[cell] = viewModel.imageProvider.fetch { image in
-                    cell.imageView?.image = image
-                }
-            }
-            items.append(item)
-        }
+        let items = viewModels.map(self.tableItem(with:))
         self.weatherItems = items
         self.tableController.items.append(contentsOf: items)
+    }
+
+    private func emptyTableItem() -> TableDataController.Item
+    {
+        TableDataController.Item {
+            Container {
+                Label("Выберите город")
+                    .textAlignment(.center)
+                    .offset(top: 16.0,
+                            bottom: 16.0,
+                            left: 0.0,
+                            right: 0.0)
+            }
+        }
+    }
+
+    private func tableItem(with viewModel: WeatherViewModel) -> TableDataController.Item
+    {
+        TableDataController.Item(actionHandler: viewModel.action) {
+            Container {
+                Stack {
+                    Container {
+                        Image(viewModel.imageProvider)
+                            .size(width: 24, height: 24)
+                            .horizontalOfsset(left: 8.0, right: 8.0)
+                            .centerY()
+                    }
+                    Stack {
+                        Label(viewModel.dayName)
+                        Label(viewModel.temperature)
+                    }
+                    .setAxis(.vertical)
+                    View()
+                }
+                .setAxis(.horizontal)
+                .offset()
+            }
+        }
     }
 
     @objc
@@ -88,14 +112,5 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
             self.updateHandler?()
         }
     }
-}
 
-class SubtitleCell: UITableViewCell {
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

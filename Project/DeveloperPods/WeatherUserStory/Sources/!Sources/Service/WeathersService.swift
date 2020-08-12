@@ -52,10 +52,16 @@ internal final class WeathersService: IWeathersService
         case .failure(let error):
             completion(.failure(error: ModelError(networkError: error)))
         case .success(let data):
-            let result = data.daily.map { day in
+            let result = data.daily.map { day -> WeatherModel in
+                var imageURL: URL? = nil
+                if let icon = day.weather.first?.icon
+                {
+                    imageURL = URL(string: WeathersOnecallMethodKey.imagesEndPoint)?
+                        .appendingPathComponent(icon + WeathersOnecallMethodKey.imageNamePostfix)
+                }
                 return WeatherModel(day: Date(timeIntervalSince1970: day.date),
-                                    temperature: Float(day.temperature.day ?? 0.0),
-                                    iconURL: nil)
+                                    temperature: Float(day.temperature.day),
+                                    iconURL: imageURL)
             }
             completion(.success(data: result))
         }

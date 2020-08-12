@@ -22,7 +22,7 @@ extension OnecallMethodResultRaw
 
         internal let temperature: TemperatureRaw
 
-        internal let weather: [TemperatureRaw]
+        internal let weather: [Weather]
 
         private enum CodingKeys : String, CodingKey {
             case date = "dt"
@@ -40,7 +40,7 @@ extension OnecallMethodResultRaw
     internal struct TemperatureRaw: Decodable
     {
 
-        internal let day: Double?
+        internal let day: Double
 
     }
 

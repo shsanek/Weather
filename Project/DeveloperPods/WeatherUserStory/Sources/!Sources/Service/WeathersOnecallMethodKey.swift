@@ -19,7 +19,7 @@ internal struct WeathersOnecallMethodKey
     internal static let excludeDaysOnlyValue = "hourly,current,minutely"
     internal static let unitsMetricValue = "metric"
 
-    internal static let imagePath = "img/wn/"
+    internal static let imagesEndPoint = "https://openweathermap.org/img/wn/"
     internal static let imageNamePostfix = "@2x.png"
 
 }

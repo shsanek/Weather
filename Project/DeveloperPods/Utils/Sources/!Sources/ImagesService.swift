@@ -54,7 +54,7 @@ public final class ImagesService: IImagesService
                         completion(nil)
                     }
                 }
-            }
+            }.resume()
         }
     }
 

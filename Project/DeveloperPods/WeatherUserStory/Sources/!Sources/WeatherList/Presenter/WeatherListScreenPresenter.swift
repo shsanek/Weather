@@ -13,6 +13,10 @@ internal final class WeatherListScreenPresenter
 
     internal var city: City? {
         didSet {
+            if let city = city
+            {
+                self.ui.setCityName(city.name)
+            }
             self.load()
         }
     }

@@ -18,6 +18,8 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
 
     private var weatherItems: [TableDataController.Item]?
     private var textItem: TableDataController.Item?
+    private var titleItem: TableDataController.Item?
+
     private let refreshControl = UIRefreshControl()
     private let skin: Skin
 
@@ -41,6 +43,7 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
         self.textItem = item
         self.tableController.items.insert(item, at: 0)
     }
+
 
     internal func hideLoadingState()
     {
@@ -66,6 +69,23 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
         self.tableController.items.append(contentsOf: items)
     }
 
+    internal func setCityName(_ name: String)
+    {
+        self.tableController.removeItem(self.titleItem)
+        self.titleItem = self.tableController.insertItem(at: 0) {
+            Container {
+                Label(name)
+                    .font(skin.font.bitTitle)
+                    .textColor(skin.palette.text.main)
+                    .textAlignment(.left)
+                    .offset(top: skin.layout.verticalBigMargin,
+                            bottom: skin.layout.verticalBigMargin,
+                            left: skin.layout.horizontalMargin,
+                            right: skin.layout.horizontalMargin)
+            }
+        }
+    }
+
     private func errorTableItem(_ text: String) -> TableDataController.Item
     {
         TableDataController.Item {
@@ -74,8 +94,8 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
                     .font(skin.font.main)
                     .textColor(skin.palette.text.error)
                     .textAlignment(.center)
-                    .offset(top: 16.0,
-                            bottom: 16.0,
+                    .offset(top: skin.layout.verticalBigMargin,
+                            bottom: skin.layout.verticalBigMargin,
                             left: skin.layout.horizontalMargin,
                             right: skin.layout.horizontalMargin)
             }
@@ -90,8 +110,8 @@ internal final class WeatherListScreenUI: IScreenUI, IWeatherListScreenUI
                     .font(skin.font.title)
                     .textColor(skin.palette.text.details)
                     .textAlignment(.center)
-                    .offset(top: 16.0,
-                            bottom: 16.0,
+                    .offset(top: skin.layout.verticalBigMargin,
+                            bottom: skin.layout.verticalBigMargin,
                             left: skin.layout.horizontalMargin,
                             right: skin.layout.horizontalMargin)
             }

@@ -55,7 +55,7 @@ public struct Skin
         {
 
             public let main = Color(light: .white, dark: .black)
-            public let support = Color(light: RGB(240, 240, 238), dark: RGB(11, 11, 9))
+            public let support = Color(light: RGB(240, 240, 238), dark: RGB(30, 30, 28))
 
         }
 

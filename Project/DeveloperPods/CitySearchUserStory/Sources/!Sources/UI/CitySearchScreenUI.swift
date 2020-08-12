@@ -21,12 +21,14 @@ internal final class CitySearchScreenUI: IScreenUI, ICitySearchScreenUI
 
     private lazy var stackContainerView = Container {
         ViewFiller<UIStackView>()
-            .offset()
+            .offset(bottom: -self.skin.layout.cornerRadius)
             .setAxis(.vertical)
             .setDistribution(.fill)
             .setAlignment(.fill)
             .setSpacing(10.0)
-    }.backgroundColor(self.skin.palette.background.support).makeView()
+    }
+    .cornerRadius(self.skin.layout.cornerRadius)
+    .backgroundColor(self.skin.palette.background.support).makeView()
 
     private lazy var textInputContainer = Container {
         TextField()
@@ -99,6 +101,7 @@ internal final class CitySearchScreenUI: IScreenUI, ICitySearchScreenUI
     {
         self.stackContainerView.contentView.addArrangedSubview(self.textInputContainer)
         self.stackContainerView.contentView.addArrangedSubview(self.tableController.tableView)
+        self.stackContainerView.contentView.addArrangedSubview(View().height(skin.layout.cornerRadius).makeView())
     }
 
 }

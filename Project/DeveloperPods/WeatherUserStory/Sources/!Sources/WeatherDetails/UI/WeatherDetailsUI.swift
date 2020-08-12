@@ -16,7 +16,7 @@ internal final class WeatherDetailsUI: IWeatherDetailsUI, IScreenUI
     private lazy var stackContainerView = Container {
         ViewFiller<UIStackView>()
             .offset()
-    }.backgroundColor(.white).makeView()
+    }.backgroundColor(self.skin.palette.background.main).makeView()
     private let skin: Skin
 
     internal init(skin: Skin)

@@ -7,6 +7,7 @@
 
 import UIKit
 import Core
+import Design
 
 public protocol IMainDelegate
 {
@@ -24,10 +25,11 @@ public final class MainScreen: IScreen
         return self.mainViewController
     }
 
-    private var mainViewController = MainViewController()
-
-    public init()
+    private lazy var mainViewController = MainViewController(skin: self.skin)
+    private let skin: Skin
+    public init(skin: Skin)
     {
+        self.skin = skin
     }
 
     public func setMainContent(screen: IScreen)
@@ -77,15 +79,19 @@ internal final class MainViewController: UIViewController
     }
 
     private let mainView = MainView()
+    private let skin: Skin
+    
 
-    internal init()
+    internal init(skin: Skin)
     {
+        self.skin = skin
         super.init(nibName: nil, bundle: nil)
     }
 
     internal override func loadView()
     {
         self.view = self.mainView
+        self.view.backgroundColor = self.skin.palette.background.main
     }
 
     required init?(coder: NSCoder)
@@ -140,8 +146,15 @@ internal final class MainView: UIView
 
     private let config: MainViewLayoutConfig = MainViewLayoutConfig()
     private var topConstraint: NSLayoutConstraint?
+    private var bottomConstraint: NSLayoutConstraint?
     private var minBottomConstraint: NSLayoutConstraint?
     private var mainBottomConstraint: NSLayoutConstraint?
+    private var keyboardHeight: CGFloat = 0.0
+
+    deinit
+    {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     internal init()
     {
@@ -171,8 +184,62 @@ internal final class MainView: UIView
         }
     }
 
+    private func addNotificationObserver()
+    {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyBoardWillShow(notification:)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyBoardWillHide(notification:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+
+    @objc private func keyBoardWillShow(notification: NSNotification)
+    {
+
+        if let frame = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect {
+            self.keyboardHeight = frame.size.height
+        }
+        else
+        {
+            self.keyboardHeight = 0.0
+        }
+        if let animationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Float
+        {
+            UIView.animate(withDuration: TimeInterval(animationDuration), animations: self.updateKeyboardPosition)
+        }
+        else
+        {
+            self.updateKeyboardPosition()
+        }
+    }
+
+    private func updateKeyboardPosition()
+    {
+        self.mainBottomConstraint?.constant = -self.config.minBottomBarHeight - self.keyboardHeight
+        self.bottomConstraint?.constant = -self.keyboardHeight
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+    }
+
+    @objc private func keyBoardWillHide(notification: NSNotification)
+    {
+        self.keyboardHeight = 0.0
+        if let animationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Float
+        {
+            UIView.animate(withDuration: TimeInterval(animationDuration), animations: self.updateKeyboardPosition)
+        }
+        else
+        {
+            self.updateKeyboardPosition()
+        }
+    }
+
     private func configure()
     {
+        self.addNotificationObserver()
         self.mainContainerView.backgroundColor = .clear
         self.bottomContainerView.backgroundColor = .clear
         self.bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -196,7 +263,8 @@ internal final class MainView: UIView
 
     private func configureBottomContainerLayout()
     {
-        self.bottomContainerView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        self.bottomConstraint = self.bottomContainerView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        self.bottomConstraint?.isActive = true
         self.bottomContainerView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         self.bottomContainerView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         self.topConstraint = self.bottomContainerView.topAnchor.constraint(equalTo: self.topAnchor)

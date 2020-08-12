@@ -112,10 +112,11 @@ extension TableDataController
     @discardableResult
     public func insertItem<FillerType: IViewFiller>(at index: Int,
                                                     actionHandler: (() -> Void)? = nil,
-                                                    fillerBuilder: @escaping () -> FillerType) -> Item
+                                                    fillerBuilder: () -> FillerType) -> Item
     {
+        let filler = fillerBuilder()
         let item = Item(actionHandler: actionHandler) {
-            fillerBuilder().fill($0)
+            filler.fill($0)
         }
         self.items.insert(item, at: index)
         return item
@@ -123,10 +124,11 @@ extension TableDataController
 
     @discardableResult
     public func addItem<FillerType: IViewFiller>(actionHandler: (() -> Void)? = nil,
-                                                 fillerBuilder: @escaping () -> FillerType) -> Item
+                                                 fillerBuilder: () -> FillerType) -> Item
     {
+        let filler = fillerBuilder()
         let item = Item(actionHandler: actionHandler) {
-            fillerBuilder().fill($0)
+            filler.fill($0)
         }
         self.items.append(item)
         return item

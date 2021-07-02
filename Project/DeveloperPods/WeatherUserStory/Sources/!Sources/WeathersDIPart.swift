@@ -5,38 +5,34 @@
 //  Created by Alex Shipin on 10.08.2020.
 //
 
-import FastDI
+import DIGreatness
 import Core
 
-public struct WeathersDIPart
+public struct WeathersDIPart: DIPart
 {
+    public init() { }
 
-    public static func load(_ container: DIContainer)
-    {
-        container.register {
-            WeatherListScreenPresenter(ui: di_arg($0),
+    public func registration(_ registrator: DIRegistrator) throws {
+        try registrator.register {
+            WeatherListScreenPresenter(ui: diArg($0) as WeatherListScreenUI,
                                        weathersService: $1,
                                        imagesService: $2)
         }
-        container.register(WeatherListScreenUI.init)
-        container.register(WeathersServiceConfigure.init)
-        container.register(WeathersService.init)
-            .as(IWeathersService.self)
-        container.register {
-            WeatherListRouter(navigator: di_arg($0),
+        try registrator.register(WeatherListScreenUI.init)
+        try registrator.register(WeathersServiceConfigure.init)
+        try registrator.register(WeathersService.init)
+            .map { $0 as IWeathersService }
+        try registrator.register {
+            WeatherListRouter(navigator: diArg($0),
                               builder: $1,
                               detailsScreenBuilder: $2)
         }
-        container.register(ScreenBuilder<WeatherListScreenPresenter, WeatherListScreenUI>.init)
-            .injection(\.presenterMaker)
-            .injection(\.uiMaker)
-        container.register {
-            WeatherDetailsPresenter(ui: di_arg($0), config: di_arg($1), imagesService: $2)
+        try registrator.register(ScreenBuilder<WeatherListScreenPresenter, WeatherListScreenUI>.init)
+        try registrator.register {
+            WeatherDetailsPresenter(ui: diArg($0) as WeatherDetailsUI, config: diArg($1), imagesService: $2)
         }
-        container.register(WeatherDetailsUI.init)
-        container.register(ScreenBuilderWithArgument<WeatherDetailsPresenter, WeatherDetailsUI, WeatherDetailsPresenterConfig>.init)
-            .injection(\.presenterMaker)
-            .injection(\.uiMaker)
+        try registrator.register(WeatherDetailsUI.init)
+        try registrator.register(ScreenBuilderWithArgument<WeatherDetailsPresenter, WeatherDetailsUI, WeatherDetailsPresenterConfig>.init)
     }
 
 }

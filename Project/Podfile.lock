@@ -2,26 +2,26 @@ PODS:
   - App (1.0.0):
     - CitySearchUserStory
     - Core
-    - FastDI
+    - DIGreatness
     - MainScreen
     - Utils
     - WeatherUserStory
   - App/Tests (1.0.0):
     - CitySearchUserStory
     - Core
-    - FastDI
+    - DIGreatness
     - MainScreen
     - Utils
     - WeatherUserStory
   - CitySearchUserStory (1.0.0):
     - Core
     - Design
-    - FastDI
+    - DIGreatness
     - Utils
   - CitySearchUserStory/Tests (1.0.0):
     - Core
     - Design
-    - FastDI
+    - DIGreatness
     - Utils
   - Core (1.0.0):
     - Utils
@@ -31,29 +31,28 @@ PODS:
     - Utils
   - Design/Tests (1.0.0):
     - Utils
-  - FastDI (1.0.0)
-  - FastDI/Tests (1.0.0)
+  - DIGreatness (0.0.1)
   - MainScreen (1.0.0):
     - Core
     - Design
-    - FastDI
+    - DIGreatness
     - Utils
   - MainScreen/Tests (1.0.0):
     - Core
     - Design
-    - FastDI
+    - DIGreatness
     - Utils
   - Utils (1.0.0)
   - Utils/Tests (1.0.0)
   - WeatherUserStory (1.0.0):
     - Core
     - Design
-    - FastDI
+    - DIGreatness
     - Utils
   - WeatherUserStory/Tests (1.0.0):
     - Core
     - Design
-    - FastDI
+    - DIGreatness
     - Utils
 
 DEPENDENCIES:
@@ -65,8 +64,7 @@ DEPENDENCIES:
   - Core/Tests (from `DeveloperPods/Core/`)
   - Design (from `DeveloperPods/Design/`)
   - Design/Tests (from `DeveloperPods/Design/`)
-  - FastDI (from `DeveloperPods/FastDI/`)
-  - FastDI/Tests (from `DeveloperPods/FastDI/`)
+  - DIGreatness (from `https://github.com/shsanek/DIGreatness`)
   - MainScreen (from `DeveloperPods/MainScreen/`)
   - MainScreen/Tests (from `DeveloperPods/MainScreen/`)
   - Utils (from `DeveloperPods/Utils/`)
@@ -83,8 +81,8 @@ EXTERNAL SOURCES:
     :path: DeveloperPods/Core/
   Design:
     :path: DeveloperPods/Design/
-  FastDI:
-    :path: DeveloperPods/FastDI/
+  DIGreatness:
+    :git: https://github.com/shsanek/DIGreatness
   MainScreen:
     :path: DeveloperPods/MainScreen/
   Utils:
@@ -92,16 +90,21 @@ EXTERNAL SOURCES:
   WeatherUserStory:
     :path: DeveloperPods/WeatherUserStory/
 
+CHECKOUT OPTIONS:
+  DIGreatness:
+    :commit: 80848c0f9e619d6a22ba595972f5139405f5ebdc
+    :git: https://github.com/shsanek/DIGreatness
+
 SPEC CHECKSUMS:
-  App: a8a65cddae34e4dd4814f1605a649304205d0cf5
-  CitySearchUserStory: f96740e464e08d1d743f23eebbbd631060227213
-  Core: 41f22f609989b55c223c75bcb1bd934ec1e6c04d
-  Design: 0b00400fde8b455c5f36e5de2de4305c4c8d2f16
-  FastDI: 738d1781e2c3ca9a4489768fad3c4b93d1b05150
-  MainScreen: 371bd56729adebbec591efdb3f4d7acfee85fc1f
-  Utils: d6b1a1aa73c9150eb52dbcdd6841bb1ec89c8940
-  WeatherUserStory: d0426064fa03874c1a301d6274ff37bd6a1c0148
+  App: 18c736c0a7bef7a550e67350e9f8b2ea6023376b
+  CitySearchUserStory: cac05018c6e896358a147d71ca490d1782562ec2
+  Core: eed6c58485750a0792b7cf580382055c92d83787
+  Design: 45e8a922933112d91cc39785368c4f25d8dff6d2
+  DIGreatness: 44e24253dbf4dc56315748565708cf3c81ae1f1f
+  MainScreen: 86b200eb8eb59e9c0f90238fabd357a31814665c
+  Utils: b1b9d733a4ee8e6462a86104ecc86cbfde98160b
+  WeatherUserStory: 49114519cc1b7f869a253a1cf419e3f48edd1255
 
-PODFILE CHECKSUM: 03343a1c2e9e4a496b6ad713928d9fe5d0221370
+PODFILE CHECKSUM: 1545cb7a7988e0542f416f5b5c28a395050d5ea8
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.1

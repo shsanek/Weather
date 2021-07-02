@@ -15,56 +15,55 @@ import MainScreen
 internal final class RootRouter
 {
 
-    internal var mainScreenMaker: () throws -> MainScreen = { throw BaseError.notImplementation }
-    internal var weatherListRouterMaker: (INavigator) throws -> WeatherListRouter = { _ in throw BaseError.notImplementation }
-    internal var citySearchRouterMaker: () throws -> CitySearchRouter = { throw BaseError.notImplementation }
-
+    private let factory: RoutersFactory
     private let navigator: INavigator
 
     private var weatherListRouter: WeatherListRouter?
     private var citySearchRouter: CitySearchRouter?
 
-    internal init(navigator: INavigator)
+    internal init(navigator: INavigator, factory: RoutersFactory)
     {
         self.navigator = navigator
+        self.factory = factory
     }
 
     internal func active()
     {
-        do
-        {
-            let mainScreen = try mainScreenMaker()
-            let weatherListRouter = try self.weatherListRouterMaker(self.navigator)
-            self.weatherListRouter = weatherListRouter
-            weatherListRouter.insertScreenHandler = {
-                mainScreen.setMainContent(screen: $0)
-            }
-
-            let citySearchRouter = try self.citySearchRouterMaker()
-            self.citySearchRouter = citySearchRouter
-            citySearchRouter.openHandler = { [mainScreen] in
-                mainScreen.open()
-            }
-            citySearchRouter.closeHandler = { [mainScreen] in
-                mainScreen.close()
-            }
-            citySearchRouter.didSelectCityHandler = { [weak weatherListRouter] city in
-                weatherListRouter?.didSelectCity(city)
-                mainScreen.close()
-            }
-            citySearchRouter.insertScreenHandler = {
-                mainScreen.setBottomContent(screen: $0)
-            }
-
-            weatherListRouter.active()
-            citySearchRouter.active()
-            self.navigator.show(config: .push(config: ShowPushConfig(screen: mainScreen)))
+        let mainScreen = self.factory.mainScreenMaker()
+        let weatherListRouter = self.factory.weatherListRouterMaker(self.navigator)
+        self.weatherListRouter = weatherListRouter
+        weatherListRouter.insertScreenHandler = {
+            mainScreen.setMainContent(screen: $0)
         }
-        catch
-        {
-            fatalError("\(error)")
+
+        let citySearchRouter = self.factory.citySearchRouterMaker()
+        self.citySearchRouter = citySearchRouter
+        citySearchRouter.openHandler = { [mainScreen] in
+            mainScreen.open()
         }
+        citySearchRouter.closeHandler = { [mainScreen] in
+            mainScreen.close()
+        }
+        citySearchRouter.didSelectCityHandler = { [weak weatherListRouter] city in
+            weatherListRouter?.didSelectCity(city)
+            mainScreen.close()
+        }
+        citySearchRouter.insertScreenHandler = {
+            mainScreen.setBottomContent(screen: $0)
+        }
+
+        weatherListRouter.active()
+        citySearchRouter.active()
+        self.navigator.show(config: .push(config: ShowPushConfig(screen: mainScreen)))
     }
 
 
+}
+
+extension RootRouter {
+    struct RoutersFactory {
+        let mainScreenMaker: () -> MainScreen
+        let weatherListRouterMaker: (INavigator) -> WeatherListRouter
+        let citySearchRouterMaker: () -> CitySearchRouter
+    }
 }

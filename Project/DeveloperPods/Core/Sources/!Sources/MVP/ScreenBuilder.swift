@@ -10,17 +10,19 @@ import Utils
 public final class ScreenBuilder<Presenter, UI: IScreenUI>
 {
 
-    public var presenterMaker: (UI) throws -> Presenter = { _ in throw BaseError.notImplementation }
-    public var uiMaker: () throws -> UI = { throw BaseError.notImplementation }
+    public let presenterMaker: (UI) -> Presenter
+    public let uiMaker: () -> UI
 
-    public init()
+    public init(presenterMaker: @escaping (UI) -> Presenter, uiMaker: @escaping () -> UI)
     {
+        self.presenterMaker = presenterMaker
+        self.uiMaker = uiMaker
     }
 
-    public func makeScreen(hookHandler: (Presenter) -> Void = { _ in }) throws -> IScreen
+    public func makeScreen(hookHandler: (Presenter) -> Void = { _ in }) -> IScreen
     {
-        let ui = try self.uiMaker()
-        let presenter = try self.presenterMaker(ui)
+        let ui = self.uiMaker()
+        let presenter = self.presenterMaker(ui)
         hookHandler(presenter)
         let vc = GenericViewController(presenter: presenter, ui: ui)
         return Screen(viewController: vc)
@@ -31,17 +33,19 @@ public final class ScreenBuilder<Presenter, UI: IScreenUI>
 public final class ScreenBuilderWithArgument<Presenter, UI: IScreenUI, Argument>
 {
 
-    public var presenterMaker: (UI, Argument) throws -> Presenter = { _, _ in throw BaseError.notImplementation }
-    public var uiMaker: () throws -> UI = { throw BaseError.notImplementation }
+    public var presenterMaker: (UI, Argument) -> Presenter
+    public var uiMaker: () -> UI
 
-    public init()
+    public init(presenterMaker: @escaping (UI, Argument) -> Presenter, uiMaker: @escaping () -> UI)
     {
+        self.presenterMaker = presenterMaker
+        self.uiMaker = uiMaker
     }
 
-    public func makeScreen(_ arg: Argument, hookHandler: (Presenter) -> Void = { _ in }) throws -> IScreen
+    public func makeScreen(_ arg: Argument, hookHandler: (Presenter) -> Void = { _ in }) -> IScreen
     {
-        let ui = try self.uiMaker()
-        let presenter = try self.presenterMaker(ui, arg)
+        let ui = self.uiMaker()
+        let presenter = self.presenterMaker(ui, arg)
         hookHandler(presenter)
         let vc = GenericViewController(presenter: presenter, ui: ui)
         return Screen(viewController: vc)

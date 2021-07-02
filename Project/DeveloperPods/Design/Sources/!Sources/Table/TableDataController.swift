@@ -116,7 +116,7 @@ extension TableDataController
     {
         let filler = fillerBuilder()
         let item = Item(actionHandler: actionHandler) {
-            filler.fill($0)
+            ($0 as? FillerType.ObjectType).flatMap(filler.fill)
         }
         self.items.insert(item, at: index)
         return item
@@ -128,7 +128,7 @@ extension TableDataController
     {
         let filler = fillerBuilder()
         let item = Item(actionHandler: actionHandler) {
-            filler.fill($0)
+            ($0 as? FillerType.ObjectType).flatMap(filler.fill)
         }
         self.items.append(item)
         return item

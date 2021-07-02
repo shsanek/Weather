@@ -24,17 +24,10 @@ public final class CitySearchRouter
 
     public func active()
     {
-        do
-        {
-            let screen = try self.screenBuilder.makeScreen { (presenter) in
-                self.setHooks(presenter)
-            }
-            self.insertScreenHandler?(screen)
+        let screen = self.screenBuilder.makeScreen { (presenter) in
+            self.setHooks(presenter)
         }
-        catch
-        {
-            fatalError("\(error)")
-        }
+        self.insertScreenHandler?(screen)
     }
 
     private func setHooks(_ presenter: CitySearchScreenPresenter)

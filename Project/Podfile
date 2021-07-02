@@ -11,11 +11,12 @@ target 'Weather' do
   addModule 'App'
   addModule 'Core'
   addModule 'Design'
-  addModule 'FastDI'
   addModule 'Utils'
   addModule 'CitySearchUserStory'
   addModule 'MainScreen'
   addModule 'WeatherUserStory'
+  
+  pod "DIGreatness", :git => 'https://github.com/shsanek/DIGreatness'
 
 
   target 'WeatherTests' do

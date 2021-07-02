@@ -33,17 +33,10 @@ public final class WeatherListRouter
 
     public func active()
     {
-        do
-        {
-            let screen = try self.screenBuilder.makeScreen { presenter in
-                self.setHooksPresenter(presenter)
-            }
-            self.insertScreenHandler?(screen)
+        let screen = self.screenBuilder.makeScreen { presenter in
+            self.setHooksPresenter(presenter)
         }
-        catch
-        {
-            fatalError("\(error)")
-        }
+        self.insertScreenHandler?(screen)
     }
 
     private func setHooksPresenter(_ presenter: WeatherListScreenPresenter)
@@ -56,15 +49,8 @@ public final class WeatherListRouter
 
     private func openDetails(_ model: WeatherModel)
     {
-        do
-        {
-            let screen = try self.detailsScreenBuilder.makeScreen(WeatherDetailsPresenterConfig(wather: model))
-            self.navigator.show(config: .present(config: ShowPresentConfig(screen: screen)))
-        }
-        catch
-        {
-            fatalError("\(error)")
-        }
+        let screen = self.detailsScreenBuilder.makeScreen(WeatherDetailsPresenterConfig(wather: model))
+        self.navigator.show(config: .present(config: ShowPresentConfig(screen: screen)))
     }
 
 }

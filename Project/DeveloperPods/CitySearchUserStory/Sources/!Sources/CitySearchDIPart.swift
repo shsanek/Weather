@@ -5,26 +5,24 @@
 //  Created by Alex Shipin on 10.08.2020.
 //
 
-import FastDI
+import DIGreatness
 import Core
 
-public struct CitySearchDIPart
+public struct CitySearchDIPart: DIPart
 {
-
-    public static func load(_ container: DIContainer)
-    {
-        container.register {
-            CitySearchScreenPresenter(ui: di_arg($0),
+    public init() { }
+    
+    public func registration(_ registrator: DIRegistrator) throws {
+        try registrator.register {
+            CitySearchScreenPresenter(ui: diArg($0) as CitySearchScreenUI,
                                       citySearchService: $1)
         }
-        container.register(CitySearchServiceConfig.init)
-        container.register(CitySearchScreenUI.init)
-        container.register(CitySearchService.init)
-            .as(ICitySearchService.self)
-        container.register(CitySearchRouter.init)
-        container.register(ScreenBuilder<CitySearchScreenPresenter, CitySearchScreenUI>.init)
-            .injection(\.presenterMaker)
-            .injection(\.uiMaker)
+        try registrator.register(CitySearchServiceConfig.init)
+        try registrator.register(CitySearchScreenUI.init)
+        try registrator.register(CitySearchService.init)
+            .map { $0 as ICitySearchService }
+        try registrator.register(CitySearchRouter.init)
+        try registrator.register(ScreenBuilder<CitySearchScreenPresenter, CitySearchScreenUI>.init)
     }
 
 }

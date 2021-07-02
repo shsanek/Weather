@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
   spec.license = 'Empty License'
   spec.homepage = 'https://github.com/shsanek/Weather'
   spec.source = { :git => 'https://github.com/shsanek/Weather' }
-  spec.summary = 'FastDI'
+  spec.summary = 'CitySearchUserStory'
 
   spec.test_spec 'Tests' do |test_spec|
     test_spec.source_files = 'Tests/**/*.swift'
@@ -18,7 +18,7 @@ Pod::Spec.new do |spec|
 
   spec.dependency 'Core'
   spec.dependency 'Utils'
-  spec.dependency 'FastDI'
+  spec.dependency 'DIGreatness'
   spec.dependency 'Design'
 
 end

@@ -6,28 +6,26 @@
 //
 
 import Core
-import FastDI
+import DIGreatness
 
 internal final class App
 {
 
-    internal let container = DIContainer()
     internal var rootRouter: RootRouter?
 
     internal func run(in navigationController: UINavigationController)
     {
-        AppDIPart.load(self.container)
+        let appPart = AppDIPart()
+        do {
+            try DI.load([appPart])
+        }
+        catch {
+            assertionFailure("\(error)")
+        }
         let navigator = Navigator(navigationController: navigationController)
-        do
-        {
-            let router: RootRouter = try container.resolve(navigator)
-            self.rootRouter = router
-            router.active()
-        }
-        catch
-        {
-            fatalError("\(error)")
-        }
+        let router: RootRouter = appPart.rootRouerMaker(navigator)
+        self.rootRouter = router
+        router.active()
     }
 
 }
